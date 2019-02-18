@@ -1,6 +1,8 @@
 {
-  "name": "front",
-  "version": "0.1.0",
+  "name": "Prode_2",
+  "version": "2.0.0",
+  "description": "El prode de la copa america",
+  "author": "Gonzalo Bianchi",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
