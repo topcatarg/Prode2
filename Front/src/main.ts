@@ -1,4 +1,7 @@
 import axios from 'axios';
+import BootstrapVue from 'bootstrap-vue';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
+import 'bootstrap/dist/css/bootstrap.css';
 import Vue from 'vue';
 import App from './App.vue';
 import './registerServiceWorker';
@@ -12,6 +15,7 @@ const instance = axios.create({
 
 Vue.config.productionTip = false;
 Vue.prototype.$http = instance;
+Vue.use(BootstrapVue);
 
 new Vue({
   router,
