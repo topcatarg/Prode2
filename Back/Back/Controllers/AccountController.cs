@@ -37,7 +37,7 @@ namespace Back.Controllers
 
         [HttpGet]
         [Route("api/gloginreturn")]
-        public void GLoginReturn(string code)
+        public IActionResult GLoginReturn(string code)
         {
 
             var request = (HttpWebRequest)WebRequest.Create("https://accounts.google.com/o/oauth2/token");
@@ -69,14 +69,15 @@ namespace Back.Controllers
             //var request2 = (HttpWebRequest)WebRequest.Create(
             //    $"https://content.googleapis.com/userinfo/v2/me?fields=email&key={_configuration.GetValue<string>("CLIENT_ID")}");
             var request2 = (HttpWebRequest)WebRequest.Create(
-                $"https://www.googleapis.com/oauth2/v1/userinfo?access_token={result.access_token}");
+                $"https://www.googleapis.com/oauth2/v2/userinfo?access_token={result.access_token}");
             //request2.Headers.Add("Bearer", result.access_token);
             //request2.Headers.Add("Authorization", "Bearer " + result.access_token);
             request2.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
             response = (HttpWebResponse)request2.GetResponse();
             responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-
+            
+             
             //Ahora deberia hacer un get a mi?
 
 
@@ -98,7 +99,7 @@ namespace Back.Controllers
 
             //var responseString = await response.Content.ReadAsStringAsync();
             ////Get the data
-            return;
+            return new OkResult();
         }
 
     }
