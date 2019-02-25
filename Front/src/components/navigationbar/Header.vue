@@ -14,7 +14,6 @@
             <b-nav-item to="/Login" v-if="ComputedUserName === ''">Entrar</b-nav-item>
             <b-nav-item to="/Logout" v-if="ComputedUserName !== ''">Salir</b-nav-item>
             <b-nav-item to="/Admin" v-if="ComputedIsAdmin">Administrar</b-nav-item>
-            <b-nav-item @click="GoogleLogin()"> Google login </b-nav-item>
           </b-navbar-nav>
           <!-- Right aligned nav items -->
         </b-collapse>
@@ -24,9 +23,6 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-// import { IUserInfo, ProfileState  } from '../models/UserInfo';
-// import store from '../store';
-
 
 @Component
 export default class Header extends Vue {
@@ -35,19 +31,6 @@ export default class Header extends Vue {
   }
   get ComputedUserName(): string {
     return this.$store.getters.UserName;
-  }
-  private GoogleLogin(): void {
-    console.log('apreto google');
-    this.$gAuth.signIn()
-    .then(GoogleUser => {
-      // On success do something, refer to
-      // https://developers.google.com/api-client-library/javascript/reference/referencedocs#googleusergetid
-      console.log('user', GoogleUser)
-      // this.isSignIn = this.$gAuth.isAuthorized
-    })
-.catch(error  => {
-  // on fail do something
-})
   }
 }
 </script>
