@@ -73,5 +73,13 @@ namespace Back.Controllers
             return new OkResult();
         }
 
+        [HttpGet]
+        [Authorize]
+        [Route("api/GetUserGroups")]
+        public async Task<IActionResult> GetGroups()
+        {
+            int UserId = User.GetClaim<int>(ClaimType.Id);
+            return new OkObjectResult(await _userService.GetUserGroups(UserId));
+        }
     }
 }

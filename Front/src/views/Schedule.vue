@@ -5,12 +5,6 @@
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="C">C</option>
-            <option value="D">D</option>
-            <option value="E">E</option>
-            <option value="F">F</option>
-            <option value="G">G</option>
-            <option value="H">H</option>
-            <option value="OCTAVOS">OCTAVOS</option>
             <option value="CUARTOS">CUARTOS</option>
             <option value="SEMIFINALES">SEMIFINALES</option>
             <option value="FINALES">FINALES</option>
@@ -23,14 +17,14 @@
                 {{data.item.standardDate}}
             </template>
             <template slot="team1Name" slot-scope="data">
-                <b-img v-if="data.item.team1Flag!=null" :src="'http://www.countryflags.io/'+ data.item.team1Flag +'/shiny/24.png'" />
+                <b-img v-if="data.item.team2Flag!=null" :src="'/img/assets/'+ data.item.team1Flag +'.png'" />
                 {{data.item.team1Name}}
             </template>
             <template slot="Result" slot-scope="data">
                 {{data.item.team1Goals}} - {{data.item.team2Goals}}
             </template>
             <template slot="team2Name" slot-scope="data">
-                <b-img v-if="data.item.team2Flag!=null" :src="'http://www.countryflags.io/'+ data.item.team2Flag +'/shiny/24.png'" />
+                <b-img v-if="data.item.team2Flag!=null" :src="'/img/assets/'+ data.item.team2Flag +'.png'" />
                 {{data.item.team2Name}}
             </template>
         </b-table>
@@ -52,7 +46,7 @@ export default class Schedule extends Vue {
 
     constructor() {
         super();
-        this.fields.push({key: 'wwGroup', label: 'Grupo'});
+        this.fields.push({key: 'group', label: 'Grupo'});
         this.fields.push({key: 'date', label: 'Fecha'});
         this.fields.push({key: 'team1Name', label: 'Equipo'});
         this.fields.push({key: 'Result', label: 'Resultado'});
@@ -77,7 +71,7 @@ export default class Schedule extends Vue {
         }
         this.filteredItems = [];
         this.items.forEach(element => {
-            if (element.wwGroup === this.FilterValue) {
+            if (element.group === this.FilterValue) {
                 this.filteredItems.push(element);
             }
         });

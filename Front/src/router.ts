@@ -44,5 +44,25 @@ export default new Router({
       name: 'Logueo',
       component: () => import(/* webpackChunkName: "Logn" */ './views/Login.vue')
     },
+    {
+      path: '/Logout',
+      name: 'Logout',
+      component: () => import(/* webpackChunkName: "Logn" */ './views/Logout.vue')
+    },
+    {
+      path: '/Admin',
+      name: 'Administrar',
+      component: () => import(/* webpackChunkName: "Logn" */ './views/Admin.vue')
+    },
+    {
+      path: '/recoverpass',
+      name: 'RecoverMail',
+      component: () => import(/* webpackChunkName: "Logn" */ './views/RecoverMail.vue')
+    },
+    {
+      path: '/Privacy',
+      name: 'privacy',
+      component: () => import(/* webpackChunkName: "Logn" */ './views/Privacy.vue')
+    }
   ]
 });

@@ -37,7 +37,7 @@ namespace Back
             //services.AddSingleton(typeof(IUserService), typeof(UserService));
             services.AddSingleton(typeof(IFixtureService), typeof(FixtureService));
             //services.AddSingleton(typeof(IForecastService), typeof(ForecastService));
-            //services.AddSingleton(typeof(IResultService), typeof(ResultService));
+            services.AddSingleton(typeof(IResultService), typeof(ResultService));
             //services.AddSingleton(typeof(IAdminService), typeof(AdminService));
             //services.AddSingleton(typeof(IMailServices), typeof(MailServices));
             //services.AddSingleton(typeof(IMigrateService), typeof(MigrateService));
