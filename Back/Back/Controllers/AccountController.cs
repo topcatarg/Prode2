@@ -10,6 +10,15 @@ using System.Text;
 using System.IO;
 using Newtonsoft.Json;
 using Back.Helpers;
+using Back.Services;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Cors;
+using System.Globalization;
+using StackExchange.Exceptional;
+
 
 namespace Back.Controllers
 {
@@ -18,10 +27,13 @@ namespace Back.Controllers
 
         private static readonly HttpClient client = new HttpClient();
         private readonly IConfiguration _configuration;
+        private readonly IUserService _userService;
 
-        public AccountController(IConfiguration configuration)
+        public AccountController(IConfiguration configuration,
+            IUserService userService)
         {
             _configuration = configuration;
+            _userService = userService;
         }
 
         [HttpPost]
