@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Cors;
 using System.Globalization;
 using StackExchange.Exceptional;
+using Back.Models;
 
 
 namespace Back.Controllers
@@ -92,6 +93,56 @@ namespace Back.Controllers
         {
             int UserId = User.GetClaim<int>(ClaimType.Id);
             return new OkObjectResult(await _userService.GetUserGroups(UserId));
+        }
+
+        [HttpPost]
+        [Route("api/login")]
+        public async Task<IActionResult> LogInAsync([FromBody] UserInfo user)
+        {
+            //Logueo usr/pass
+            user = await _userService.LoginUserAsync(user.Name, user.Password);
+            if (user == null)
+            {
+                return BadRequest(1);
+            }
+            //Genero las claims. Si pago, no pago, o si es admin!
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimType.Id, user.Id.ToString(CultureInfo.InvariantCulture)),
+                new Claim(ClaimType.Name, user.Name),
+                new Claim(ClaimType.Mail, user.Mail),
+                new Claim(ClaimType.TeamName, user.TeamName),
+                new Claim(ClaimType.GameGroupId, user.GameGroupId.ToString(CultureInfo.InvariantCulture)),
+                new Claim(ClaimType.GoogleMail, user.GoogleMail)
+            };
+
+            if (user.IsAdmin)
+            {
+                claims.Add(new Claim(ClaimType.IsAdmin, "1"));
+            }
+            if (user.HasPaid)
+            {
+                claims.Add(new Claim(ClaimType.HasPaid, "1"));
+            }
+            if (user.ReceiveMails)
+            {
+                claims.Add(new Claim(ClaimType.ReceiveMails, "1"));
+            }
+            if (user.ReceiveAdminMails)
+            {
+                claims.Add(new Claim(ClaimType.ReceiveAdminMails, "1"));
+            }
+            if (user.GoogleLogin)
+            {
+                claims.Add(new Claim(ClaimType.GoogleLogin, "1"));
+            }
+            var identity = new ClaimsIdentity(claims, "login");
+
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(identity));
+
+            return new OkObjectResult(true);
         }
     }
 }

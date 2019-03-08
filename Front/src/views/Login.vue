@@ -15,10 +15,10 @@
 </template>
 
 <script lang="ts">
+import CreateUser from '@/components/login/CreateUser.vue';
+import LoginUser from '@/components/login/LoginUser.vue';
+import RecoverMail from '@/components/login/RecoverMail.vue';
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import CreateUser from '../components/CreateUser.vue';
-import LoginUser from '../components/LoginUser.vue';
-import RecoverMail from '../components/RecoverMail.vue';
 
 @Component({
   components: {

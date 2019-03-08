@@ -2,14 +2,14 @@
     <div class="container">
         <b-form @submit="onSubmit" @reset="onReset" class="mt-4">
             <b-form-group
-                horizontal
+                
                 label-cols="4"
                 id="fieldset1"
                 label="Ingresa el nombre del equipo">
                 <b-form-input v-model.trim="UserTeamName" required/>
             </b-form-group>
             <b-form-group
-                horizontal
+                
                 label-cols="4"
                 id="fieldset1"
                 label="Ingresa el nombre de usuario para loguearte"
@@ -19,21 +19,21 @@
                 <b-form-input v-model.trim="UserName" required/>
             </b-form-group>
             <b-form-group
-                horizontal
+                
                 label-cols="4"
                 id="pass1"
                 label="Ingresa el correo electronico">
                 <b-form-input v-model.trim="UserMail" required type="email"/>
             </b-form-group>
             <b-form-group
-                horizontal
+                
                 label-cols="4"
                 id="pass2"
                 label="Ingresa la contraseña">
                 <b-form-input v-model.trim="UserPassword" required type="password"/>
             </b-form-group>
             <b-form-group
-                horizontal
+                
                 label-cols="4"
                 id="fieldset1"
                 label="Repetí la contraseña"
@@ -42,7 +42,7 @@
                 <b-form-input v-model.trim="UserPassword2" required type="password"/>
             </b-form-group>
             <b-form-group
-                horizontal
+                
                 label-cols="4"
                 id="fieldset1"
                 label="Ingresa el nombre del grupo en el cual participas">
@@ -56,10 +56,10 @@
 </template>
 
 <script lang="ts">
+import ErrorAlert from '@/components/general/ErrorAlert.vue';
+import { CreateUserResult } from '@/enums/CreateUserResult';
 import Axios from 'axios';
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import ErrorAlert from '../components/ErrorAlert.vue';
-import { CreateUserResult } from '../enums/CreateUserResult';
 
 @Component({
   components: {
@@ -100,7 +100,7 @@ export default class CreateUser extends Vue {
     private onSubmit() {
         this.GeneralError = '';
         // test group
-        Axios.get(process.env.VUE_APP_BASE_URI + 'ExistGroup?group=' + this.UserGroup)
+        Axios.get('ExistGroup?group=' + this.UserGroup)
         .then(response => {
             this.UserGroupId = response.data;
             this.CreateUser(); })
@@ -119,7 +119,7 @@ export default class CreateUser extends Vue {
     }
 
     private CreateUser() {
-        Axios.post(process.env.VUE_APP_BASE_URI + 'create',
+        Axios.post('create',
         {
             name: this.UserName,
             password: this.UserPassword,
@@ -133,7 +133,7 @@ export default class CreateUser extends Vue {
     }
 
     private loginUser() {
-        Axios.post(process.env.VUE_APP_BASE_URI + 'login', {
+        Axios.post('login', {
             name: this.UserName,
             password: this.UserPassword
         },

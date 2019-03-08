@@ -31,5 +31,8 @@ namespace Back.Models
 
         public bool ReceiveAdminMails { get; set; }
 
+        public string GoogleMail { get; set; }
+
+        public bool GoogleLogin { get; set; }
     }
 }

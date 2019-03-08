@@ -34,7 +34,7 @@ namespace Back
             services.AddMvc();
 
             services.AddSingleton(typeof(IDbService), typeof(DbService));
-            //services.AddSingleton(typeof(IUserService), typeof(UserService));
+            services.AddSingleton(typeof(IUserService), typeof(UserService));
             services.AddSingleton(typeof(IFixtureService), typeof(FixtureService));
             //services.AddSingleton(typeof(IForecastService), typeof(ForecastService));
             services.AddSingleton(typeof(IResultService), typeof(ResultService));
@@ -47,7 +47,7 @@ namespace Back
             {
                 o.Cookie.Path = "/api";
                 o.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Lax;
-                o.Cookie.MaxAge = new TimeSpan(1, 0, 0, 0);
+                o.Cookie.MaxAge = new TimeSpan(0, 1, 0, 0);
                 o.Cookie.Name = "Prode2";
 
                 o.Events.OnRedirectToLogin = context =>

@@ -60,7 +60,7 @@ export default class Schedule extends Vue {
         .then(Response => {
             self.items = self.filteredItems = Response.data;
         })
-        .finally(() => self.Loading = false);
+        .then(() => self.Loading = false);
     }
 
     @Watch('FilterValue')

@@ -12,10 +12,10 @@
 </template>
 
 <script lang="ts">
+import ITableFields from '@/helpers/ITableFields';
+import IFixtureData from '@/interfaces/IFixtureData';
 import Axios from 'axios';
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import IFixtureData from '../../helpers/FixtureData';
-import IFixtureTableFields from '../../helpers/FixtureTableFields';
 
 const AppProps = Vue.extend({
   props: {
@@ -27,21 +27,21 @@ const AppProps = Vue.extend({
 export default class UserForecast extends AppProps {
 
     private otherid: number = 0;
-    private fields: IFixtureTableFields[] = [];
+    private fields: ITableFields[] = [];
     private items: IFixtureData[] = [];
 
     constructor() {
         super();
-        this.fields.push(new IFixtureTableFields('team1Name', 'Equipo'));
-        this.fields.push(new IFixtureTableFields('Result', 'Resultado'));
-        this.fields.push(new IFixtureTableFields('team2Name', 'Equipo'));
-        this.fields.push(new IFixtureTableFields('score', 'Puntaje'));
+        this.fields.push({key: 'team1Name', label: 'Equipo'});
+        this.fields.push({key: 'Result', label:  'Resultado'});
+        this.fields.push({key: 'team2Name', label:  'Equipo'});
+        this.fields.push({key: 'score', label:  'Puntaje'});
     }
 
     @Watch('id')
     private MostrarError(newvalue: number, oldvalue: number) {
         this.otherid = newvalue;
-        Axios.get(process.env.VUE_APP_BASE_URI + 'forecast/others?UserId=' + this.otherid, {withCredentials: true})
+        this.$http.get('forecast/others?UserId=' + this.otherid, {withCredentials: true})
         .then(Response => this.items = Response.data);
     }
 }

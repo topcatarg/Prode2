@@ -2,7 +2,6 @@
     <div class="container">
         <b-form @submit="onSubmit" class="mt-4">
             <b-form-group
-                horizontal
                 label-cols="4"
                 id="fieldset1"
                 label="Nombre de usuario"
@@ -12,22 +11,28 @@
                 <b-form-input v-model.trim="UserName" required/>
             </b-form-group>
             <b-form-group
-                horizontal
                 label-cols="4"
                 id="pass2"
                 label="Contraseña">
                 <b-form-input v-model.trim="UserPassword" required type="password"/>
             </b-form-group>
-            <b-button type="submit" variant="primary" class="mr-3">Entrar</b-button>
+            <b-button type="submit" variant="primary" class="mr-3">
+                <b-spinner small type="grow" v-if="Ingresando">
+                    Ingresando
+                </b-spinner>
+                <div v-if="!Ingresando">
+                    Ingresar
+                </div>
+            </b-button>
             <ErrorAlert :message=this.GeneralError class="mt-2"/>
         </b-form>
     </div>
 </template>
 
 <script lang="ts">
+import ErrorAlert from '@/components/general/ErrorAlert.vue';
 import Axios from 'axios';
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import ErrorAlert from '../components/ErrorAlert.vue';
 
 @Component({
   components: {
@@ -36,6 +41,7 @@ import ErrorAlert from '../components/ErrorAlert.vue';
 })
 export default class LoginUser extends Vue {
 
+    private Ingresando: boolean = false;
     private GeneralError: string = '';
     private UserName: string = '';
     private UserPassword: string = '';
@@ -57,19 +63,19 @@ export default class LoginUser extends Vue {
 
     private onSubmit() {
         this.GeneralError = '';
-        Axios.post(process.env.VUE_APP_BASE_URI + 'login', {
+        this.Ingresando = true;
+        const self = this;
+        this.$http.post('login', {
             name: this.UserName,
             password: this.UserPassword
-        },
-        {
-            withCredentials: true
         })
         .then(data => {
-                this.$store.dispatch('GetUserData');
-                this.$router.push('/');
+                self.$store.dispatch('GetUserData');
+                self.$router.push('/');
                 }
             )
-        .catch(error => this.GetError(error.response.data));
+        .catch(error => this.GetError(error.response.data))
+        .finally(() => self.Ingresando = false);
     }
 
     private GetError(data: any) {

@@ -16,6 +16,8 @@ namespace Back.Helpers
         public const string ReceiveMails = nameof(ReceiveMails);
         public const string ReceiveAdminMails = nameof(ReceiveAdminMails);
         public const string GameGroupId = nameof(GameGroupId);
+        public const string GoogleMail = nameof(GoogleMail);
+        public const string GoogleLogin = nameof(GoogleLogin);
 
     }
 }
