@@ -9,31 +9,18 @@
                 <b-form-input v-model.trim="UserTeamName" required/>
             </b-form-group>
             <b-form-group
-                
-                label-cols="4"
-                id="fieldset1"
-                label="Ingresa el nombre de usuario para loguearte"
-                :invalid-feedback="invalidUserName"
-                :valid-feedback="validUserName"
-                :state="stateUserName">
-                <b-form-input v-model.trim="UserName" required/>
-            </b-form-group>
-            <b-form-group
-                
                 label-cols="4"
                 id="pass1"
                 label="Ingresa el correo electronico">
                 <b-form-input v-model.trim="UserMail" required type="email"/>
             </b-form-group>
             <b-form-group
-                
                 label-cols="4"
                 id="pass2"
                 label="Ingresa la contraseña">
                 <b-form-input v-model.trim="UserPassword" required type="password"/>
             </b-form-group>
             <b-form-group
-                
                 label-cols="4"
                 id="fieldset1"
                 label="Repetí la contraseña"
@@ -41,15 +28,13 @@
                 :state="statePassword">
                 <b-form-input v-model.trim="UserPassword2" required type="password"/>
             </b-form-group>
-            <b-form-group
-                
-                label-cols="4"
-                id="fieldset1"
-                label="Ingresa el nombre del grupo en el cual participas">
-                <b-form-input v-model.trim="UserGroup" required />
-            </b-form-group>
-            <b-button type="submit" variant="primary" class="mr-3">Crear</b-button>
-            <b-button type="reset" variant="danger">Limpiar</b-button>
+            <b-button-group>
+                <b-button type="submit" variant="outline-primary" class="mr-3">Crear</b-button>
+                <b-button type="reset" variant="outline-danger" class="mr-3">Limpiar</b-button>
+                <b-button variant="light" class="mr-3">
+                    <b-img src="@/assets/btn_google.png"/>
+                </b-button>
+            </b-button-group>
             <ErrorAlert :message=this.GeneralError class="mt-2"/>
         </b-form>
     </div>
@@ -58,7 +43,6 @@
 <script lang="ts">
 import ErrorAlert from '@/components/general/ErrorAlert.vue';
 import { CreateUserResult } from '@/enums/CreateUserResult';
-import Axios from 'axios';
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 
 @Component({
@@ -69,7 +53,6 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 export default class CreateUser extends Vue {
 
     private UserTeamName: string = '';
-    private UserName: string = '';
     private UserMail: string = '';
     private UserPassword: string = '';
     private UserPassword2: string = '';
@@ -77,21 +60,6 @@ export default class CreateUser extends Vue {
     private GeneralError: string = '';
     private UnEvenPassword: string = 'Las contraseñas no son iguales';
     private UserGroupId: number = 0;
-
-    get invalidUserName(): string {
-        if (this.UserName.includes(' ')) {
-            return 'No puede contener espacios';
-        }
-        return '';
-    }
-
-    get validUserName(): string {
-        return '';
-    }
-
-    get stateUserName(): boolean {
-        return !this.UserName.includes(' ');
-    }
 
     get statePassword(): boolean {
         return this.UserPassword === this.UserPassword2;
@@ -109,7 +77,6 @@ export default class CreateUser extends Vue {
 
     private onReset() {
         this.UserTeamName = '';
-        this.UserName = '';
         this.UserMail = '';
         this.UserPassword = '';
         this.UserPassword2 = '';
